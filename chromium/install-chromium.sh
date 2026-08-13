@@ -33,7 +33,7 @@ cat > "$DESKTOP_FILE" <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=LINE (Chromium)
+Name=LINE
 Comment=Standalone LINE via Chromium (side-loaded extension)
 Exec=$LAUNCHER
 Icon=line-standalone
@@ -51,5 +51,5 @@ echo "  launcher : $LAUNCHER"
 echo "  desktop  : $DESKTOP_FILE"
 echo "  app_id   : $APPID"
 echo
-echo "Search \"LINE (Chromium)\" in your app menu. First launch = QR login."
+echo "Search \"LINE\" in your app menu. First launch = QR login."
 echo "Uninstall with ./uninstall-chromium.sh"

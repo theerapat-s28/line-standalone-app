@@ -95,11 +95,11 @@ if [[ "${1:-}" == "--refresh" || ! -f "$EXT_DIR/manifest.json" ]]; then
   if [[ "$GUI" == 1 ]] && command -v zenity >/dev/null 2>&1; then
     # pulsating progress dialog in the background; we kill it when done
     exec 3> >(zenity --progress --pulsate --no-cancel \
-      --title="LINE (Chromium)" \
+      --title="LINE" \
       --text="Setting up LINE (first run): downloading the extension…" 2>/dev/null)
     ZPID=$!
   elif [[ "$GUI" == 1 ]] && command -v notify-send >/dev/null 2>&1; then
-    notify-send -a "LINE (Chromium)" "Setting up LINE" "First run: downloading the extension…" 2>/dev/null || true
+    notify-send -a "LINE" "Setting up LINE" "First run: downloading the extension…" 2>/dev/null || true
   fi
   close_progress() { [[ -n "$ZPID" ]] && { kill "$ZPID" 2>/dev/null || true; exec 3>&- 2>/dev/null || true; ZPID=""; }; }
 
@@ -109,9 +109,9 @@ if [[ "${1:-}" == "--refresh" || ! -f "$EXT_DIR/manifest.json" ]]; then
     close_progress
     if [[ "$GUI" == 1 ]]; then
       if command -v zenity >/dev/null 2>&1; then
-        zenity --error --title="LINE (Chromium)" --text="Could not download the LINE extension.\nCheck your internet connection and try again." 2>/dev/null || true
+        zenity --error --title="LINE" --text="Could not download the LINE extension.\nCheck your internet connection and try again." 2>/dev/null || true
       else
-        notify-send -a "LINE (Chromium)" "Setup failed" "Could not download the LINE extension." 2>/dev/null || true
+        notify-send -a "LINE" "Setup failed" "Could not download the LINE extension." 2>/dev/null || true
       fi
     fi
     echo "ERROR: fetch failed." >&2; exit 1
@@ -155,7 +155,7 @@ PY
 # first shows ERR_BLOCKED_BY_CLIENT. We drive a reload-until-loaded loop over a
 # localhost-only DevTools port (ephemeral; Chromium picks it) so the visible
 # window deterministically ends up on LINE, regardless of machine speed.
-echo "Launching LINE (Chromium) ..."
+echo "Launching LINE ..."
 rm -f "$PROFILE_DIR/DevToolsActivePort"
 "$CHROME_BIN" --user-data-dir="$PROFILE_DIR" --no-first-run --no-default-browser-check \
   --remote-debugging-port=0 \

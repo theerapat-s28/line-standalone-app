@@ -1,6 +1,6 @@
 Name:           line-standalone-chromium
 Version:        1.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Standalone LINE desktop app via Chromium (side-loaded extension)
 
 License:        MIT
@@ -56,5 +56,8 @@ update-desktop-database &>/dev/null || :
 %{_datadir}/applications/%{appid}.desktop
 
 %changelog
-* Tue Jul 21 2026 jerem <jeremy@newlogic.com> - 1.0.0-1
+* Thu Aug 13 2026 jerem <jeremy.bethmont@gmail.com> - 1.0.0-2
+- Rename the desktop entry from "LINE (Chromium)" to "LINE".
+
+* Tue Jul 21 2026 jerem <jeremy.bethmont@gmail.com> - 1.0.0-1
 - Initial package: Chromium-based standalone LINE launcher.

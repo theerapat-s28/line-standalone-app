@@ -8,13 +8,14 @@ TREE="$(mktemp -d)"
 trap 'rm -rf "$TREE"' EXIT
 
 mkdir -p "$TREE"/{SOURCES,SPECS,BUILD,RPMS,SRPMS}
-cp "$REPO/experimental/line-chromium.sh"          "$TREE/SOURCES/line-chromium.sh"
+cp "$REPO/chromium/line-chromium.sh"          "$TREE/SOURCES/line-chromium.sh"
 cp "$HERE/line-standalone-chromium.desktop"       "$TREE/SOURCES/"
 cp "$HERE/line-standalone-chromium.spec"          "$TREE/SPECS/"
 
 rpmbuild -bb --define "_topdir $TREE" "$TREE/SPECS/line-standalone-chromium.spec"
 
 mkdir -p "$HERE/dist"
+rm -f "$HERE/dist"/*.rpm          # drop stale builds so only the current one remains
 find "$TREE/RPMS" -name '*.rpm' -exec cp -v {} "$HERE/dist/" \;
 echo
 echo "RPM built in: $HERE/dist/"

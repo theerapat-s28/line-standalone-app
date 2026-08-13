@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=LINE (Chromium)
+Name=LINE
 Comment=Standalone LINE via Chromium (side-loaded extension)
 Exec=/usr/bin/line-chromium
 Icon=line-standalone

@@ -1,8 +1,8 @@
-# Experimental: standalone LINE via Chromium (no Web Store install)
+# Standalone LINE via Chromium (no Web Store install)
 
-This variant runs LINE as a standalone app **without installing the extension from
-the Chrome Web Store** — it fetches the extension itself. It exists because of a
-hard constraint we discovered the hard way (see below).
+This is the **standard/recommended** way to run the standalone LINE app: it fetches
+the extension itself and runs it in Chromium, **without installing anything from the
+Chrome Web Store**. It's what the RPM in `../packaging/rpm/` packages.
 
 ## TL;DR findings
 
@@ -45,12 +45,11 @@ matching `StartupWMClass`) so the dock shows the LINE icon.
 
 ```bash
 ./install-chromium.sh          # ONE-TIME setup: fetches the extension, extracts the
-                               # icon, and creates the "LINE (Chromium)" menu entry
+                               # icon, and creates the "LINE" menu entry
 ```
 
-That's the only script you run by hand. Afterwards, **just launch "LINE
-(Chromium)" from your app menu / dock** (or pin it) — you never call the scripts
-directly again.
+That's the only script you run by hand. Afterwards, **just launch "LINE" from
+your app menu / dock** (or pin it) — you never call the scripts directly again.
 
 `line-chromium.sh` is the launcher that the `.desktop` entry runs for you on every
 start; it's not meant to be invoked manually. The only time you'd touch it again:
@@ -84,17 +83,17 @@ restarts. After the first QR login you stay logged in — **provided the window 
 closed cleanly** (a hard power-off with LINE open can lose the not-yet-flushed
 cookie).
 
-## Trade-offs vs. the installed-extension approach (repo root)
+## Trade-offs vs. the Chrome installed-extension alternative (repo root)
 
-| | Installed (root repo, Chrome) | This (Chromium, fetched) |
+| | This (Chromium, fetched) — standard | Alternative (root repo, Chrome) |
 |---|---|---|
-| Manual Web Store install | required | **not needed** |
-| Browser | Google Chrome | Chromium only |
-| Login | shares your Chrome profile | isolated profile → one-time QR login, then persists (see below) |
-| Push notifications | work | unreliable (side-loaded copy lacks GCM creds) |
-| Auto-update | yes (store) | no — re-run `--refresh` |
-| DevTools port | none | localhost-only ephemeral port stays open for the browser's lifetime |
+| Manual Web Store install | **not needed** | required |
+| Browser | Chromium only | Google Chrome |
+| Login | isolated profile → one-time QR login, then persists (see above) | shares your Chrome profile |
+| Push notifications | unreliable (side-loaded copy lacks GCM creds) | work |
+| Auto-update | no — re-run `--refresh` | yes (store) |
+| DevTools port | localhost-only ephemeral port stays open for the browser's lifetime | none |
 
-The installed-extension approach in the repo root remains the recommended path on
-Google Chrome. This is the answer to "provision without a Web Store install," which
-is only possible on Chromium.
+This Chromium method is the standard path — self-contained and needing no Web Store
+install. The Chrome installed-extension approach in the repo root is a good
+alternative if you already run Chrome and want shared login + working push.

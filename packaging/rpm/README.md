@@ -1,17 +1,17 @@
 # RPM package (Fedora)
 
 Builds `line-standalone-chromium` — the Chromium-based standalone LINE app
-(see `../../experimental/`) as an installable RPM with a `chromium` dependency.
+(see `../../chromium/`) as an installable RPM with a `chromium` dependency.
 
 The package ships **only** the launcher (`/usr/bin/line-chromium`) and the desktop
 entry. It does **not** bundle LINE's extension or logo — the launcher fetches the
 extension from Google on first run and extracts the icon per-user. So the RPM
 itself carries no third-party code.
 
-> **Do not mix the RPM with the git-clone install** (`../../experimental/install-chromium.sh`).
+> **Do not mix the RPM with the git-clone install** (`../../chromium/install-chromium.sh`).
 > Both write the same `app_id` desktop entry, and a user-level entry shadows the
 > system (RPM) one. Pick one. If you previously ran the git installer, remove its
-> entry first with `../../experimental/uninstall-chromium.sh`. Both share the same
+> entry first with `../../chromium/uninstall-chromium.sh`. Both share the same
 > per-user profile (`~/.local/share/line-chromium`), so your login carries over.
 
 ## Build
@@ -26,7 +26,7 @@ itself carries no third-party code.
 sudo dnf install ./dist/line-standalone-chromium-*.noarch.rpm
 ```
 
-`dnf` pulls in `chromium` automatically. Then launch **"LINE (Chromium)"** from
+`dnf` pulls in `chromium` automatically. Then launch **"LINE"** from
 your app menu (first launch fetches the extension and shows the QR login).
 
 ## Uninstall
