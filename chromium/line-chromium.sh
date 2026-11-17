@@ -33,9 +33,18 @@ if [[ -z "$CHROME_BIN" ]]; then
     command -v "$c" >/dev/null 2>&1 && { CHROME_BIN="$(command -v "$c")"; break; }
   done
 fi
+# fall back to the Flathub Chromium (user install first, then system) — lets you
+# run without installing any system package (no sudo / dnf)
+if [[ -z "$CHROME_BIN" ]]; then
+  for c in "${XDG_DATA_HOME:-$HOME/.local/share}/flatpak/exports/bin/org.chromium.Chromium" \
+           /var/lib/flatpak/exports/bin/org.chromium.Chromium; do
+    [[ -x "$c" ]] && { CHROME_BIN="$c"; break; }
+  done
+fi
 if [[ -z "$CHROME_BIN" ]]; then
   echo "ERROR: no Chromium-family browser found. Google Chrome will NOT work here" >&2
-  echo "       (it blocks --load-extension). Install 'chromium' or set CHROME_BIN=." >&2
+  echo "       (it blocks --load-extension). Install 'chromium', or without root:" >&2
+  echo "       flatpak install --user flathub org.chromium.Chromium  (or set CHROME_BIN=)." >&2
   exit 1
 fi
 case "$CHROME_BIN" in

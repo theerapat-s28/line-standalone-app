@@ -62,6 +62,24 @@ start; it's not meant to be invoked manually. The only time you'd touch it again
 Override the browser (if `chromium` isn't the right binary) with
 `CHROME_BIN=/path/to/chromium`, e.g. in the `.desktop` `Exec=` line.
 
+### No-root install (Flatpak Chromium)
+
+If you'd rather not install any system package (no `sudo`/`dnf` — e.g. on a VM
+where you hold back kernel updates), use the Flathub build of Chromium,
+installed for your user only:
+
+```bash
+flatpak install --user flathub org.chromium.Chromium
+./install-chromium.sh
+```
+
+When no `chromium` binary is on `PATH`, the launcher automatically falls back to
+the Flatpak Chromium (user install first, then system-wide). Its sandbox already
+grants home-directory access and shares the network, so the profile in
+`~/.local/share/line-chromium` and the localhost DevTools port work without any
+`flatpak override`. Remove it later with
+`flatpak uninstall --user org.chromium.Chromium`.
+
 Uninstall with `./uninstall-chromium.sh` (add `--purge` to also delete the
 profile + your login).
 
